@@ -14,9 +14,7 @@ class Categories extends StatelessWidget {
       body: CustomPage(
         showSearchWidget: false,
         title: 'Categories',
-        actions: [
-         const DROCartTap()
-        ],
+        actions: [const DROCartTap()],
         body: FutureBuilder(
           future: getCategory(),
           builder: (_, AsyncSnapshot snapshot) {

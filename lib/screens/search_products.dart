@@ -1,3 +1,4 @@
+import 'package:dro_app/screens/front_page.dart';
 import 'package:dro_app/utility/export_screens.dart';
 import 'package:dro_app/utility/export_widgets.dart';
 import 'package:flutter/material.dart';
@@ -17,50 +18,59 @@ class _SearchProductState extends State<SearchProduct> {
   String text = '';
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: const DROFloatingButton(
-        round: true,
-      ),
-      body: CustomPage(
-        title: 'Pharmacy',
-        showSearchWidget: false,
-        searchWidget: Row(
-          children: [
-            DROTextField(
-              controller: _searchController,
-              autoFocus: true,
-              onChanged: (value) {
-                setState(() {
-                  text = value;
-                });
-              },
-            ),
-            GestureDetector(
-              onTap: () => setState(() {
-                _searchController.text = '';
-                text = '';
-              }),
-              child: DROText(
-                text: 'Cancel',
-                color: white,
-                fontWeight: FontWeight.w600,
-                fontSize: 18,
-              ),
-            )
-          ],
+    Future<bool> _onWillScope() async {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (_) => FrontPage(index: 2)));
+      return false;
+    }
+
+    return WillPopScope(
+      onWillPop: _onWillScope,
+      child: Scaffold(
+        floatingActionButton: const DROFloatingButton(
+          round: true,
         ),
-        actions: [DeliveryIconView()],
-        body: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DeliveryWidget(),
-            text.isNotEmpty
-                ? ProductsView(
-                    queryText: text,
-                    fromSearch: true,
-                  )
-                : Center()
-          ],
+        body: CustomPage(
+          title: 'Pharmacy',
+          showSearchWidget: false,
+          searchWidget: Row(
+            children: [
+              DROTextField(
+                controller: _searchController,
+                autoFocus: true,
+                onChanged: (value) {
+                  setState(() {
+                    text = value;
+                  });
+                },
+              ),
+              GestureDetector(
+                onTap: () => setState(() {
+                  _searchController.text = '';
+                  text = '';
+                }),
+                child: DROText(
+                  text: 'Cancel',
+                  color: white,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 18,
+                ),
+              )
+            ],
+          ),
+          actions: [DeliveryIconView()],
+          body: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              DeliveryWidget(),
+              text.isNotEmpty
+                  ? ProductsView(
+                      queryText: text,
+                      fromSearch: true,
+                    )
+                  : Center()
+            ],
+          ),
         ),
       ),
     );

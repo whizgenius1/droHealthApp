@@ -19,6 +19,7 @@ class ProductView extends StatelessWidget {
           context,
           MaterialPageRoute(
               builder: (_) => AddToCart(
+                fromSearch: fromSearch,
                     productsModel: productsModel,
                   ))),
       child: Card(

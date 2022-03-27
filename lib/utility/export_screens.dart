@@ -7,3 +7,4 @@ export '../screens/home.dart';
 export '../screens/search_products.dart';
 export '../screens/add_to_cart.dart';
 export '../screens/cart_screen.dart';
+export '../screens/category_product.dart';

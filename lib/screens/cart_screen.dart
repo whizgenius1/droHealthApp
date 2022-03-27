@@ -1,3 +1,4 @@
+import 'package:dro_app/screens/front_page.dart';
 import 'package:dro_app/utility/export_packages.dart';
 import 'package:dro_app/utility/export_providers.dart';
 import 'package:dro_app/utility/export_widgets.dart';
@@ -10,91 +11,100 @@ class CartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: BottomAppBar(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(30, 0, 0, 10),
-          child: Consumer<ProductProvider>(
-              builder: (context, productProvider, child) {
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                RichText(
-                    text: TextSpan(
-                        text: "Total: ",
-                        style: TextStyle(
-                            fontFamily: 'ProximaNova',
-                            fontSize: 18,
-                            fontWeight: FontWeight.w400,
-                            color: categoryTextColor),
-                        children: [
-                      TextSpan(
-                          text: MoneyFormatter(
-                                  amount: productProvider.totalPrice / 100,
-                                  settings:
-                                      MoneyFormatterSettings(symbol: symbol))
-                              .output
-                              .symbolOnLeft,
+    Future<bool> _onWillScope() async {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (_) => FrontPage(index: 2)));
+      return false;
+    }
+
+    return WillPopScope(
+      onWillPop: _onWillScope,
+      child: Scaffold(
+        bottomNavigationBar: BottomAppBar(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(30, 0, 0, 10),
+            child: Consumer<ProductProvider>(
+                builder: (context, productProvider, child) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  RichText(
+                      text: TextSpan(
+                          text: "Total: ",
                           style: TextStyle(
                               fontFamily: 'ProximaNova',
                               fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                              color: categoryTextColor))
-                    ])),
-                Expanded(
-                  child: DROCustomButton(
-                      width: MediaQuery.of(context).size.width * .5,
-                      onPressed: () {
-                        ///write function to check out and clear cart list
-                        ///
-                        productProvider.clearProductItem();
-                      },
-                      child: DROText(
-                        text: 'CHECKOUT',
-                        color: white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w700,
-                      )),
-                )
-              ],
-            );
-          }),
+                              fontWeight: FontWeight.w400,
+                              color: categoryTextColor),
+                          children: [
+                        TextSpan(
+                            text: MoneyFormatter(
+                                    amount: productProvider.totalPrice / 100,
+                                    settings:
+                                        MoneyFormatterSettings(symbol: symbol))
+                                .output
+                                .symbolOnLeft,
+                            style: TextStyle(
+                                fontFamily: 'ProximaNova',
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                                color: categoryTextColor))
+                      ])),
+                  Expanded(
+                    child: DROCustomButton(
+                        width: MediaQuery.of(context).size.width * .5,
+                        onPressed: () {
+                          ///write function to check out and clear cart list
+                          ///
+                          productProvider.clearProductItem();
+                        },
+                        child: DROText(
+                          text: 'CHECKOUT',
+                          color: white,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w700,
+                        )),
+                  )
+                ],
+              );
+            }),
+          ),
         ),
-      ),
-      body: CustomPage(
-        showSearchWidget: false,
-        titleWidget: Row(
-          children: [
-            DROCart(),
-            SizedBox(
-              width: 20,
-            ),
-            DROText(
-              text: 'Cart',
-              fontSize: 22,
-              color: white,
-              fontWeight: FontWeight.w700,
-            )
-          ],
-        ),
-        body: Consumer<ProductProvider>(
-          builder: (context, productProvider, child) => ListView.builder(
-            padding: EdgeInsets.fromLTRB(20, 10, 20, 20),
-            itemCount: productProvider.itemLength,
-            itemBuilder: (_, index) => Column(
-              children: [
-                CartView(
-                  productItem:
-                      productProvider.productItem.values.toList()[index],
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * .9,
-                  child: Divider(
-                    color: deliveryBackground,
-                    thickness: 1.5,
+        body: CustomPage(
+          showSearchWidget: false,
+          titleWidget: Row(
+            children: [
+              DROCart(),
+              SizedBox(
+                width: 20,
+              ),
+              DROText(
+                text: 'Cart',
+                fontSize: 22,
+                color: white,
+                fontWeight: FontWeight.w700,
+              )
+            ],
+          ),
+          body: Consumer<ProductProvider>(
+            builder: (context, productProvider, child) => ListView.builder(
+              padding: EdgeInsets.fromLTRB(20, 10, 20, 20),
+              itemCount: productProvider.itemLength,
+              itemBuilder: (_, index) => Column(
+                children: [
+                  CartView(
+                    productItem:
+                        productProvider.productItem.values.toList()[index],
                   ),
-                )
-              ],
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * .9,
+                    child: Divider(
+                      color: deliveryBackground,
+                      thickness: 1.5,
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),

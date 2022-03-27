@@ -13,15 +13,20 @@ class CustomPage extends StatelessWidget {
   final Widget searchWidget;
   final Widget? bottomAppBar;
   final bool showSearchWidget;
+  final Widget? leading;
+  final double? leadingWidth;
+
   const CustomPage(
       {Key? key,
       required this.body,
       this.title = 'Pharmacy',
       this.titleSpacing = 0,
       this.titleWidget,
+      this.leading,
       this.searchWidget = const Center(),
       this.actions,
       this.showSearchWidget = true,
+      this.leadingWidth,
       this.bottomAppBar})
       : super(key: key);
 
@@ -36,6 +41,8 @@ class CustomPage extends StatelessWidget {
                 pinned: true,
                 //  toolbarHeight: 20,
                 backgroundColor: Colors.transparent,
+                leading: leading,
+                leadingWidth: leadingWidth,
 
                 title: Container(
                   margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
