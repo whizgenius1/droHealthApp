@@ -71,41 +71,46 @@ class _AddCartViewState extends State<AddCartView> {
     return WillPopScope(
       onWillPop: _onWillScope,
       child: Scaffold(
-        bottomNavigationBar: BottomAppBar(
-          child: Consumer<ProductProvider>(
-              builder: (context, productProvider, child) {
-            return DROCustomButton(
-              onPressed: () {
-                productProvider.addProductItem(
-                    id: widget.productsModel.id,
-                    productsModel: widget.productsModel,
-                    quantity: _quantity);
+        bottomNavigationBar: Container(
+          height: 80,
+          child: BottomAppBar(
 
-                showModalBottomSheet(
-                    context: context,
-                    builder: (_) => CartBottomSheet(
-                          productName: widget.productsModel.name,
-                        ));
-              },
-              child: Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    DROCart(),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    DROText(
-                      text: 'Add to cart',
-                      fontSize: 15,
-                      fontWeight: FontWeight.w700,
-                      color: white,
-                    )
-                  ],
+            child: Consumer<ProductProvider>(
+                builder: (context, productProvider, child) {
+              return DROCustomButton(
+
+                onPressed: () {
+                  productProvider.addProductItem(
+                      id: widget.productsModel.id,
+                      productsModel: widget.productsModel,
+                      quantity: _quantity);
+
+                  showModalBottomSheet(
+                      context: context,
+                      builder: (_) => CartBottomSheet(
+                            productName: widget.productsModel.name,
+                          ));
+                },
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      DROCart(),
+                      const SizedBox(
+                        width: 15,
+                      ),
+                      DROText(
+                        text: 'Add to cart',
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700,
+                        color: white,
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            );
-          }),
+              );
+            }),
+          ),
         ),
         body: Center(
           child: ListView(
