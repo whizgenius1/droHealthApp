@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dro_app/utility/export_packages.dart';
 import 'package:dro_app/utility/export_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import '../utility/export_utilities.dart';
 
@@ -51,8 +52,9 @@ class Pharmacy extends StatelessWidget {
             children: const [
               DeliveryWidget(),
               CategoriesView(),
-              ProductsView()
-            ],
+              ProductsView(),
+
+          ],
           ),
         ),
       ),
